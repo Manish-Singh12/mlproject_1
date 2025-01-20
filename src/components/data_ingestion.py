@@ -7,6 +7,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 from src.components.data_transformation import DataTransformation
+from src.components.model_trainer import ModelTrainer
 
 
 @dataclass
@@ -24,7 +25,9 @@ class DataIngestion:
 
         try:
             data = pd.read_csv('notebook\data\Student_Performance.csv')
-            logging.info('Read the data in a DataFrame')
+            data.drop_duplicates(inplace=True, ignore_index=True)
+
+            logging.info('Read the data in a DataFrame & remove the duplicates')
 
             os.makedirs(os.path.dirname(self.ingestion_config.raw_data_path), exist_ok=True)
 
@@ -51,5 +54,8 @@ if __name__ == '__main__':
     train_data, test_data = obj.initiate_data_ingestion()
 
     data_transformation = DataTransformation()
-    data_transformation.initiate_data_transformation(train_data, test_data)
+    train_arr, test_arr,_ = data_transformation.initiate_data_transformation(train_data, test_data)
+
+    model_trainer = ModelTrainer()
+    print(model_trainer.initiate_model_trainer(train_arr, test_arr))
 
