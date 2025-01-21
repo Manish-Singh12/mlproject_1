@@ -45,7 +45,8 @@ class ModelTrainer:
                 'Gradient Boosting': GradientBoostingRegressor(),
                 'Random Forest Regressor': RandomForestRegressor(),
                 'AdaBoost Regressor': AdaBoostRegressor(),
-                'CatBoost Regressor': CatBoostRegressor(verbose=False)
+                'CatBoost Regressor': CatBoostRegressor(verbose=False),
+                'XGBoost Regressor': XGBRegressor()
             }
 
             params = {
@@ -72,6 +73,10 @@ class ModelTrainer:
                 'CatBoost Regressor': {
                     'iterations': [25, 50, 100],
                     'learning_rate': [0.1, 0.05, 0.01, 0.001]
+                },
+                'XGBoost Regressor': {
+                    'learning_rate': [0.05, 0.09, 0.1, 0.3, 0.5],
+                    'n_estimators': [25, 50, 100, 125, 150, 200]
                 }
             }
 
